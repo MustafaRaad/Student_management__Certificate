@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block title %}Students view{% endblock title %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static './style/student_list.css' %}">
+<div class="container">
+    <section class="shadow-lg ">
+        <div class="row justify-content-center">
+            <h3>
+                Students list
+            </h3>
+        </div>
+        <hr class="w-50">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="row">
+            <div class="alert alert-danger alert-dismissible text-center col" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+        <button class="btn btn-light" onclick="window.print()" role="button"><i class="fas fa-print fa-lg"
+                aria-hidden="true"></i></button>
+
+        <table class="table text-center table-md border" id="table" data-toggle="table" data-search="true"
+            data-filter-control="true" data-show-export="true" data-click-to-select="true">
+            <thead class="table-warning">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">short SID</th>
+                    <th scope="col" onclick="sortTable(2)" class="th">Full Name</th>
+                    <th scope="col" onclick="sortTable(3)" class="th">College</th>
+                    <th scope="col" onclick="sortTable(4)" class="th">Department</th>
+                    <th scope="col" onclick="sortTable(5)" class="th">Stage</th>
+                    <th scope="col" onclick="sortTable(6)" class="th">Details compelted ?</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            {% for s in student %}
+            <tbody>
+                <tr>
+                    <td scope="row" class="increment"></td>
+                    <td>{{s.id}}</td>
+                    <td>{{ s.first_name }} {{s.second_name}} {{ s.third_name }}</td>
+                    <td>{{ s.college }}</td>
+                    <td>{{ s.department }}</td>
+                    <td>{{ s.stage }}</td>
+                    {%if s.verified_personal_info  and s.verified_contact_info and s.verified_nation_info and s.verified_school_info and s.verified_college_info%}
+                    <td>
+                        <i class="fas fa-check" aria-hidden="true"></i>
+                    </td>
+                    {%else%}
+                    <td>
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </td>
+                    {%endif%}
+                    <td>
+                        <a href="/student/cert/{{s.id}}/" class="btn border">
+                            cert
+                        </a>
+                        <a href="/student/detail/{{s.id}}/" class="btn">
+                            <i class="fas fa-user-edit" aria-hidden="true"></i>
+                        </a>
+                    </td>
+
+                    {% empty %}
+                    <h1>No student yet.</h1>
+                </tr>
+
+            </tbody>
+            {% endfor %}
+        </table>
+        <div class="row justify-content-center my-0">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; first</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+                <li class="bg-light page-link">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</li>
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </section>
+</div>
+<script>
+    var myTab = document.getElementById('table');
+    for (i = 1; i < myTab.rows.length; i++) {
+        var objCells = myTab.rows[i].cells.item(1).innerText;
+        var res = objCells.substr(0, 8);
+        document.getElementById("table").rows[i].cells.item(1).innerText = res;
+    }
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("table");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<!-- ##########################################
+## Developed By:Mustafa Raad Mutashar ##
+## mustafa.raad.7@gmail.com 2020 ##
+########################################## -->
+
+{%endblock body%}

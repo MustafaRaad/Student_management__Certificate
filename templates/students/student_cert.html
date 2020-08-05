@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Students details{% endblock title %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static './style/cert.css' %}">
+{% if student.stage == '4' %}
+
+<div class="shadow-lg" id="printableArea" style="display: flex;margin: auto;">
+    <div class="txt">
+        <h1 style=" position: absolute;z-index: 1;top: 29.8rem;right: 32rem;font-size: 2.6rem;">
+            
+            {{student.AR_full_name}}
+        </h1>   
+        <h2 style=" position: absolute;z-index: 1;top: 34.6rem;right: 24.7rem;font-size: 2.2rem;">
+            {{student.AR_college}}
+        </h2>
+        <h2 style=" position: absolute;z-index: 1;top: 34.6rem;right: 54rem;font-size: 2.2rem;">
+            {{student.AR_department}}
+        </h2>
+        <h2 style=" position: absolute;z-index: 1;top: 40.3rem;right: 39.5rem;font-size: 2.2rem;">
+            {{student.final_grade}}
+        </h2>
+    </div>
+    <div class="cert">
+        <img src="{% static './cert.JPEG' %}" alt="cert">
+    </div>
+</div>
+<div class="row divBtn">
+    <input type="button" class="btn btn-info" onclick="printDiv('printableArea')" value="Print the certificate" />
+</div>
+{%else%}
+<h1>
+    Sorry the student is not graduated    
+</h1>
+
+{%endif%}
+
+<script>
+    function printDiv(printableArea) {
+        var printContents = document.getElementById(printableArea).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+{%endblock body%}

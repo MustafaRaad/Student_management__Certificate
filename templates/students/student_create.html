@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% block title %}Add Student{% endblock title %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static './style/student_detail.css' %}">
+<div class="container">
+    <section class="shadow-lg ">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+                <div class="row justify-content-center">
+                    <h3>
+                        Add Student
+                    </h3>
+                </div>
+                <hr class="w-50">
+        <!-- ------------------------------------------------- form ------------------------------------------------- -->
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="personal-tab" data-toggle="tab" href="#personal" role="tab"
+                    aria-controls="personal" aria-selected="true">Personal info.</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">Contact info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="nation-tab" data-toggle="tab" href="#nation" role="tab" aria-controls="nation"
+                    aria-selected="false">Nation info.</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="school-tab" data-toggle="tab" href="#school" role="tab" aria-controls="school"
+                    aria-selected="false">School info.</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="college-tab" data-toggle="tab" href="#college" role="tab"
+                    aria-controls="college" aria-selected="false">College info.</a>
+            </li>
+        </ul>
+
+        <form method="POST" class="tab-content form-group" id="myTabContent">
+            {% csrf_token %}
+            {{form.as_p}}
+        </form>
+        <p class="fade" id="username" style="display: none;">{{user.username}}</p>
+        <!-- ------------------------------------------------- form ------------------------------------------------- -->
+
+    </section>
+</div>
+<script>
+    user = document.getElementById('username').innerText
+    var s = document.getElementById("id_author");
+    s.querySelectorAll("option")[0].removeAttribute("selected")
+    s.style.display = 'none'
+
+
+
+    options = document.getElementById("id_author").querySelectorAll("option");
+
+    for (let i = 0; i < options.length; i++) {
+        opt = document.getElementById("id_author").querySelectorAll("option")[i].text
+        if (opt == user) {
+            document.getElementById("id_author").querySelectorAll("option")[i].selected = 'selected'
+            // console.log(opt);
+        }
+    }
+
+    var para = document.getElementById("myTabContent").querySelectorAll("p");
+
+    var divPersonal = document.createElement("DIV");
+    divPersonal.setAttribute("class", "tab-pane fade show active p-5");
+    divPersonal.setAttribute("role", "tabpanel");
+    divPersonal.setAttribute("aria-labelledby", "personal-tab");
+    divPersonal.setAttribute("id", "personal");
+    for (let i = 0; i < 10; i++) {
+        divPersonal.appendChild(para[i]);
+    }
+    document.getElementById("myTabContent").appendChild(divPersonal);
+    // ------------------------------------
+
+    var divContact = document.createElement("DIV");
+    divContact.setAttribute("class", "tab-pane fade p-5");
+    divContact.setAttribute("role", "tabpanel");
+    divContact.setAttribute("aria-labelledby", "contact-tab");
+    divContact.setAttribute("id", "contact");
+    for (let i = 10; i < 16; i++) {
+        divContact.appendChild(para[i]);
+    }
+    document.getElementById("myTabContent").appendChild(divContact);
+    // ------------------------------------
+
+    var divNation = document.createElement("DIV");
+    divNation.setAttribute("class", "tab-pane fade p-5");
+    divNation.setAttribute("role", "tabpanel");
+    divNation.setAttribute("aria-labelledby", "nation-tab");
+    divNation.setAttribute("id", "nation");
+    for (let i = 16; i < 25; i++) {
+        divNation.appendChild(para[i]);
+    }
+    document.getElementById("myTabContent").appendChild(divNation);
+    // ------------------------------------
+
+    var divSchool = document.createElement("DIV");
+    divSchool.setAttribute("class", "tab-pane fade p-5");
+    divSchool.setAttribute("role", "tabpanel");
+    divSchool.setAttribute("aria-labelledby", "school-tab");
+    divSchool.setAttribute("id", "school");
+    for (let i = 25; i < 30; i++) {
+        divSchool.appendChild(para[i]);
+    }
+    document.getElementById("myTabContent").appendChild(divSchool);
+    // ------------------------------------
+
+    var divCollege = document.createElement("DIV");
+    divCollege.setAttribute("class", "tab-pane fade p-5");
+    divCollege.setAttribute("role", "tabpanel");
+    divCollege.setAttribute("aria-labelledby", "college-tab");
+    divCollege.setAttribute("id", "college");
+    for (let i = 30; i < para.length; i++) {
+        divCollege.appendChild(para[i]);
+    }
+    document.getElementById("myTabContent").appendChild(divCollege);
+    document.getElementsByTagName("label")[para.length - 1].innerText = user
+    // ------------------------------------------------------------------------
+
+    // var btnn = document.getElementById("myTabContent").querySelectorAll("button");
+    // var btn = document.getElementById("myTabContent")
+    var divBtn = document.createElement("button");
+    divBtn.setAttribute("type", "submit");
+    divBtn.setAttribute("class", "btn btn-primary btn-block");
+    divBtn.innerText = 'Register'
+
+    // divBtn.appendChild(btn);
+    document.getElementById("myTabContent").appendChild(divBtn);
+
+
+
+    // ------------------------------------------------------------------------
+    var personal = document.getElementById("personal").querySelectorAll("p");
+    var contact = document.getElementById("contact").querySelectorAll("p");
+    var nation = document.getElementById("nation").querySelectorAll("p");
+    var school = document.getElementById("school").querySelectorAll("p");
+    var college = document.getElementById("college").querySelectorAll("p");
+
+    for (var i = 0; i < personal.length; i++) {
+        personal[i].setAttribute("class", "form-group row");
+    }
+
+    for (var i = 0; i < contact.length; i++) {
+        contact[i].setAttribute("class", "form-group row");
+    }
+
+    for (var i = 0; i < nation.length; i++) {
+        nation[i].setAttribute("class", "form-group row");
+        c = nation[i].firstChild;
+        c.setAttribute('class', 'col-2 col-form-label')
+    }
+
+    for (var i = 0; i < school.length; i++) {
+        school[i].setAttribute("class", "form-group row");
+    }
+
+    for (var i = 0; i < college.length; i++) {
+        college[i].setAttribute("class", "form-group row");
+        c = college[i].firstChild;
+        c.setAttribute('class', 'col-2 col-form-label')
+    }
+
+    var x = document.querySelectorAll("select");
+    for (var i = 0; i < x.length; i++) {
+        x[i].setAttribute("class", "form-control col-10");
+    }
+    // console.log(document.getElementsByTagName("p"));
+
+    for (let i = 0; i < para.length; i++) {
+        var myIn = document.getElementsByTagName("INPUT")[i].getAttribute("type");
+        var labels = document.getElementsByTagName("LABEL")[i].setAttribute("class", "col-2 col-form-label");
+
+        if (myIn == 'file') {
+            document.getElementsByTagName("INPUT")[i].setAttribute("class", "btn btn-light col-3");
+        }
+        else if (myIn == 'checkbox') {
+            document.getElementsByTagName("INPUT")[i].setAttribute("class", "form-control col-1");
+            document.getElementsByTagName("INPUT")[i].style.fontSize = '10px'
+        }
+        else {
+            document.getElementsByTagName("INPUT")[i].setAttribute("class", "form-control col-10");
+        }
+    }
+</script>
+<!-- ##########################################
+## Developed By:Mustafa Raad Mutashar ##
+## mustafa.raad.7@gmail.com 2020 ##
+########################################## -->
+
+{%endblock body%}

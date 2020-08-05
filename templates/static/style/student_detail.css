@@ -1,0 +1,50 @@
+body {
+  background-color: #f9f9f9;
+}
+
+section {
+  margin: 5rem auto;
+  padding: 3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  background: white;
+  border-radius: 10px;
+}
+header {
+  display: flex;
+}
+
+.fa-check {
+  color: #51cf66;
+}
+.fa-times {
+  color: #ff6b6b;
+}
+.no-photo {
+  height: 100%;
+  padding: 5rem 5rem;
+}
+.title{
+text-align: center;
+}
+
+td img{
+  height: 100px;
+}
+.fa-arrow-left{
+  color: #303030;
+  font-size: 1.5rem;
+}
+.fa-arrow-left:hover{
+  color: #ff922b;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

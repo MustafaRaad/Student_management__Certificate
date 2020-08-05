@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% block title %}Students details{% endblock title %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static './style/student_detail.css' %}">
+<div class="container">
+    <section class="shadow-lg">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="row">
+            <div class="alert alert-success alert-dismissible text-center col" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="row my-2">
+            <div class="col-6">
+                <a href="/student/list/" role="button">
+                <i class="fas fa-arrow-left fa-lg" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="col-6" style="text-align-last: end;">
+                <a class="btn btn-danger mx-auto" href="/student/delete/{{student.id}}" role="button">Delete</a>
+                <a class="btn btn-warning mx-auto" onclick="window.print()" role="button">Print</a>
+                <a class="btn btn-warning my-auto" href="/student/update/{{student.id}}" role="button">Edit Student's details</a>
+            </div>
+        </div>
+        <header class="row align-items-center align-self-center">
+            <div class="col-3">
+                {%if student.image%}
+                <img src="{{student.image.url}}" alt="{{student}} photo" class="rounded img-thumbnail">
+                {%else%}
+                <p class="rounded img-thumbnail no-photo">No picture available</p>
+                {%endif%}
+            </div>
+            <div class="col-6 border-right border-dark">
+                <h2>{{ student.first_name }} {{student.second_name}} {{ student.third_name }}</h2>
+                <hr>
+                <h5>{{ student.college }}, {{ student.department }} {{ student.stage }}</h5>
+                <h6>Full Student ID: {{student.id}}</h6>
+                <p>Registered at: {{student.register_date | date:'Y-m-d'}}</p>
+
+            </div>
+            <div class="col-2">
+                <p>Personal info.</p>
+                <p>Contact info.</p>
+                <p>Nation info.</p>
+                <p>School info.</p>
+                <p>College info.</p>
+            </div>
+            <div class="col-1">
+                {%if student.verified_personal_info %}
+                <p>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </p>
+                {%else%}
+                <p>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </p>
+                {%endif%}
+                {%if student.verified_contact_info %}
+                <p>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </p>
+                {%else%}
+                <p>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </p>
+                {%endif%}
+                {%if student.verified_nation_info %}
+                <p>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </p>
+                {%else%}
+                <p>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </p>
+                {%endif%}
+                {%if student.verified_school_info %}
+                <p>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </p>
+                {%else%}
+                <p>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </p>
+                {%endif%}
+                {%if student.verified_college_info %}
+                <p>
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </p>
+                {%else%}
+                <p>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </p>
+                {%endif%}
+            </div>
+        </header>
+        <!-- ----------------------------------------------personal---------------------------------------------- -->
+        <h4 class="title shadow-none p-2 my-4 text-white bg-info rounded text-center">
+            Personal details
+        </h4>
+        <table class="table text-center shadow-sm rounded">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">First name</th>
+                    <th scope="col">Second name</th>
+                    <th scope="col">Third name</th>
+                    <th scope="col">Fourth name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.first_name }}</td>
+                    <td>{{ student.second_name }}</td>
+                    <td>{{ student.third_name }}</td>
+                    <td>{{ student.fourth_name }}</td>
+                </tr>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Sur name</th>
+                        <th scope="col">Mother full name</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Birthdate</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.sur_name }}</td>
+                    <td>{{ student.mother_full_name }}</td>
+                    <td>{{ student.gender }}</td>
+                    <td>{{ student.birthdate | date:'Y-m-d' }}</td>
+                </tr>
+        </table>
+        <!-- ----------------------------------------------personal---------------------------------------------- -->
+        <!-- ----------------------------------------------Contact---------------------------------------------- -->
+        <h4 class="title shadow-none p-2 my-4 text-white bg-info rounded text-center">
+            Contact details
+        </h4>
+        <table class="table text-center shadow-sm rounded">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Parent phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">First address</th>
+                    <th scope="col">Second address</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.phone }}</td>
+                    <td>{{ student.parent_phone }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.first_address}}</td>
+                    <td>{{ student.second_address }}</td>
+                </tr>
+        </table>
+        <!-- ----------------------------------------------Contact---------------------------------------------- -->
+        <!-- ----------------------------------------------Nation---------------------------------------------- -->
+        <h4 class="title shadow-none p-2 my-4 text-white bg-info rounded text-center">
+            Nation details
+        </h4>
+        <table class="table text-center shadow-sm rounded">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nationality</th>
+                    <th scope="col">Birth city</th>
+                    <th scope="col">Living city</th>
+                    <th scope="col">National id</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.nationality }}</td>
+                    <td>{{ student.birth_city }}</td>
+                    <td>{{ student.living_city }}</td>
+                    <td>{{ student.national_id}}</td>
+                </tr>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">National id issue place</th>
+                        <th scope="col">Passport id</th>
+                        <th scope="col">Passport issue place</th>
+                        <th scope="col">Passport expire date</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.national_id_issue_place }}</td>
+                    <td>{{ student.passport_id }}</td>
+                    <td>{{ student.passport_issue_place }}</td>
+                    <td>{{ student.passport_expire_date | date:'Y-m-d'}}</td>
+                </tr>
+        </table>
+        <!-- ----------------------------------------------Nation---------------------------------------------- -->
+        <!-- ----------------------------------------------school---------------------------------------------- -->
+        <h4 class="title shadow-none p-2 my-4 text-white bg-info rounded text-center">
+            School details
+        </h4>
+        <table class="table text-center shadow-sm rounded">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Medical status</th>
+                    <th scope="col">School document</th>
+                    <th scope="col">Degree approval</th>
+                    <th scope="col">Average of 6th</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.medical_status }}</td>
+                    <td>
+                        {%if student.school_document%}
+                        <a href="{{student.school_document.url}}">
+                            Download
+                            <!-- <img src="{{student.school_document.url}}" alt=""></a> -->
+                        {%else%}
+                        No document uploaded
+                        {%endif%}
+                    </td>
+                    <td>
+                        {%if student.degree_approval%}
+                        <a href="{{student.degree_approval.url}}">
+                            Download
+                            <!-- <img src="{{student.degree_approval.url}}" alt=""></a> -->
+                        {%else%}
+                        No document uploaded
+                        {%endif%}
+                    </td>
+                    <td>{{ student.average}}</td>
+                </tr>
+        </table>
+        <!-- ----------------------------------------------School---------------------------------------------- -->
+        <!-- ----------------------------------------------College---------------------------------------------- -->
+        <h4 class="title shadow-none p-2 my-4 text-white bg-info rounded text-center">
+
+            College details
+        </h4>
+        <table class="table text-center shadow-sm rounded">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">College</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Stage</th>
+                    <th scope="col">Group</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">{{ student.college }}</td>
+                    <td>{{ student.department }}</td>
+                    <td>{{ student.stage }}</td>
+                    <td>{{ student.group}}</td>
+                </tr>
+                <thead class="thead-light">
+                    <tr>
+                        <th colspan="2" scope="col">Status</th>
+                        <th scope="col">Enroll date</th>
+                        <th scope="col">Examination id</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td scope="row" colspan="2">{{ student.status }}</td>
+                    <td>{{ student.enroll_date | date:'Y-m-d'}}</td>
+                    <td>{{ student.examination_id }}</td>
+                </tr>
+        </table>
+        <!-- ----------------------------------------------College---------------------------------------------- -->
+
+    </section>
+</div>
+<!-- ##########################################
+## Developed By:Mustafa Raad Mutashar ##
+## mustafa.raad.7@gmail.com 2020 ##
+########################################## -->
+
+{%endblock body%}

@@ -1,0 +1,22 @@
+body {
+  background-color: #f9f9f9;
+}
+
+section {
+  margin: 5rem auto;
+  padding: 3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  background: white;
+  border-radius: 10px;
+}
+
+section header {
+  margin: 1rem;
+  display: flex;
+}
+header h2 {
+  font-size: 20pt;
+  font-weight: bold;
+  align-self: center;
+  margin-bottom: 2rem;
+}

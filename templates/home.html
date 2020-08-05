@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static './style/homepage.css' %}">
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+  <li>
+      {{ message }}
+  </li> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+
+<section id="intro" class="shadow-lg mb-5 rounded">
+    <div class="col-6 border-right border-dark text-center align-self-center">
+        <h1>
+            Student's Management system
+        </h1>
+    </div>
+    <div class="col-6  align-self-center">
+        <h1>
+            The registeration now is <br><br> Better <br> Easier <br> Acurate
+
+        </h1>
+    </div>
+</section>
+<section id="stat" class="shadow-lg mb-5 rounded">
+    <div class=" text-center align-self-center">
+        <h1>
+            Web application for managing the student registration system
+        </h1>
+        <h4>Student admission is one of the most important activities within the university as no university can
+            survive
+            without
+            students.</h4>
+    </div>
+</section>
+
+<!-- ##########################################
+## Developed By:Mustafa Raad Mutashar ##
+## mustafa.raad.7@gmail.com 2020 ##
+########################################## -->
+
+{%endblock body%}
