@@ -13,7 +13,7 @@ nav .collapse .nav-link {
   margin: auto 1.5rem;
 }
 nav {
-  background-color: #333333;
+  background-color: #d7d7d7;
   font-weight: 400;
   opacity: 0.95;
 }
@@ -24,7 +24,7 @@ nav .right .fas {
   margin: auto 1rem;
 }
 nav .navbar-brand {
-  color: #339af0 !important;
+  color: #303030 !important;
 }
 .fas {
   font-size: 1.3rem;
@@ -40,8 +40,8 @@ main header .stripes {
   -webkit-transform-origin: 0;
   transform-origin: 0;
   background: linear-gradient(
-    #507eb1,
-    #709dc7 0%,
+    #50b172,
+    #70c79a 0%,
     #dde9f5 24%,
     #eaf2f9 34%,
     #f7f7f7 52%

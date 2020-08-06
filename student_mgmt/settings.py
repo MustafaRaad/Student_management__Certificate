@@ -30,9 +30,9 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = '!$6aqqt&1=gj7z3)c1bq03zt4&&jpl3@(@7ha6%3swlfd%&69q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mighty-brook-37232.herokuapp.com','127.0.0.1']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Application definition
